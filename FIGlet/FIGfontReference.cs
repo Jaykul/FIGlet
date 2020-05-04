@@ -52,7 +52,7 @@ namespace FIGlet
                     continue;
 
                 var resourceName = resourcePath.Substring(prefix.Length);
-                if (!IsHandledExtension(resourceName))
+                if (!FIGfont.CanHandleExtension(resourceName))
                     continue;
 
                 yield return new EmbeddedFIGfontReference(resourceName, siblingType, Path.GetFileNameWithoutExtension(resourceName));
@@ -68,21 +68,27 @@ namespace FIGlet
         public static IEnumerable<FIGfontReference> Parse(string directory, bool recurse)
         {
             var entriesInDirectory = from e in Directory.GetFiles(directory)
-                                     let n = Path.GetFileName(e)
-                                     where IsHandledExtension(n)
-                                     select (FIGfontReference)new FileFIGfontReference(e, Path.GetFileNameWithoutExtension(n));
+                                     where FIGfont.CanHandleExtension(e)
+                                     select new FileFIGfontReference(e, Path.GetFileNameWithoutExtension(e))
+                                     as FIGfontReference;
             if (recurse)
                 entriesInDirectory = entriesInDirectory.Concat(Directory.GetDirectories(directory).SelectMany(d => Parse(d, true)));
             return entriesInDirectory;
         }
 
-        private static bool IsHandledExtension(string fileName)
+        public static IEnumerable<FIGfontReference> FindFIGfonts()
         {
-            var extension = Path.GetExtension(fileName);
-            if (string.IsNullOrEmpty(extension))
-                return false;
-            return extension.Equals(".zip", StringComparison.InvariantCultureIgnoreCase)
-                   || extension.Equals(".flf", StringComparison.InvariantCultureIgnoreCase);
+            var localPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            foreach (FIGfontReference font in Parse(typeof(FontsRoot)))
+                yield return font;
+
+            foreach (FIGfontReference font in Parse(localPath, true))
+                yield return font;
+        }
+
+        public static FIGfont GetFIGfont(string name)
+        {
+            return FindFIGfonts().Where(font => font.Name.Equals(name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault()?.LoadFont();
         }
 
         private static IList<FIGfontReference> _integrated;
