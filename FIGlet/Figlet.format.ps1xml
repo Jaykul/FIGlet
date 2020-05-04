@@ -1,0 +1,102 @@
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>Figlet</Name>
+      <ViewSelectedBy>
+        <TypeName>FIGlet.FIGdriver</TypeName>
+      </ViewSelectedBy>
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+            <CustomItem>
+              <ExpressionBinding>
+                <ScriptBlock>
+                  $fig = $_
+                  if ($fig.Foreground -or $fig.Background) {
+                      $Length = $fig.ToString() -split "`n" | Sort-Object Length -Descending | Select -ExpandProperty Length -First 1
+                      if ($fig.Foreground) {
+                          $foreground = Get-Gradient $fig.Foreground[0] $fig.Foreground[-1] -Count $Length -ColorSpace HSL
+                      }
+                      if ($fig.Background) {
+                          $background = Get-Gradient $fig.Background[0] $fig.Background[-1] -Count $Length -ColorSpace HSL
+                      }
+                  }
+                  $ColorChars = if ($fig.ColorChars) {
+                      "[$($fig.ColorChars)]"
+                  } else {
+                      "."
+                  }
+
+                  foreach ($line in $fig.ToString() -split "`n") {
+                      for ($c=0; $c -lt $line.Length; $c++) {
+                          if ($line[$c] -match $ColorChars) {
+                              $color  = if ($foreground) { $foreground[$c].ToVtEscapeSequence() }
+                          } else {
+                              $color  = "$([char]27)[39;49m"
+                          }
+                          $color += if ($background) { $background[$c].ToVtEscapeSequence($true) }
+                          Write-Host -NoNewline ($color + $line[$c])
+                      }
+                      Write-Host "$([char]27)[39;49m"
+                  }
+                </ScriptBlock>
+              </ExpressionBinding>
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+    </View>
+    <View>
+      <Name>Figlet</Name>
+      <ViewSelectedBy>
+        <TypeName>FIGlet.FIGdriver</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <Label>Message</Label>
+                <ScriptBlock>$_.Message</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>Font</Label>
+                <ScriptBlock>$_.Font.Name</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>Foreground</Label>
+                <ScriptBlock>
+                if ($_.Foreground) {
+                    ((Get-Gradient $_.Foreground[0] $_.Foreground[-1] -ColorSpace $_.ColorSpace -Count 20 |
+                        ForEach-Object { $_.ToVtEscapeSequence($true) + " " }) -join "") + "$([char]27)[49m"
+                }
+                </ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>Background</Label>
+                <ScriptBlock>
+                if ($_.Background) {
+                    ((Get-Gradient $_.Background[0] $_.Background[-1] -ColorSpace $_.ColorSpace -Count 20 |
+                        ForEach-Object { $_.ToVtEscapeSequence($true) + " " }) -join "") + "$([char]27)[49m"
+                }
+                </ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>ColorSpace</Label>
+                <ScriptBlock>$_.ColorSpace</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>LayoutRule</Label>
+                <ScriptBlock>$_.LayoutRule</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>Blender</Label>
+                <ScriptBlock>$_.Blender</ScriptBlock>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

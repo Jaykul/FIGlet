@@ -1,26 +1,31 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net40;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <SignAssembly>true</SignAssembly>
-    <PackageId>FIGlet-_-lib</PackageId>
+    <PackageId>FIGlet</PackageId>
     <Version>1.0.6</Version>
-    <Company>picrap</Company>
-    <PackageLicenseUrl>https://github.com/picrap/FIGlet/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/picrap/FIGlet</PackageProjectUrl>
+    <Company>PoshCode</Company>
+    <PackageLicenseUrl>https://github.com/Jaykul/FIGlet/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Jaykul/FIGlet</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/picrap/FIGlet/master/FIGlet/FIGlet.png</PackageIconUrl>
-    <RepositoryUrl>https://github.com/picrap/FIGlet.git</RepositoryUrl>
-    <Copyright>picrap</Copyright>
-    <Description>A FIGlet library that allows to generate ASCII art (in the form of big letters) from text. Supports most common features such as fitting and smushing, reads fonts from raw or zipped files and offers extensibility.</Description>
+    <RepositoryUrl>https://github.com/Jaykul/FIGlet.git</RepositoryUrl>
+    <Copyright>Copyright © 2020 Joel Bennett</Copyright>
+    <Description>A FIGlet Module for generating large letters from text. Supports figlet kearning features like fitting and smushing, and reads fonts from raw or zipped flf files.</Description>
     <RepositoryType>git</RepositoryType>
     <Product>FIGlet</Product>
-    <Authors>picrap</Authors>
+    <Authors>Joel Bennett @jaykul, Pascal Craponne @picrap</Authors>
     <AssemblyName>FIGlet</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageTags>figlet</PackageTags>
     <AssemblyOriginatorKeyFile>FIGlet.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="PowerShellStandard.Library">
+      <Version>5.1.0</Version>
+    </PackageReference>
+  </ItemGroup>
 
   <ItemGroup>
     <None Remove="Fonts\big.zip" />
