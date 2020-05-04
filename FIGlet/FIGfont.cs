@@ -8,6 +8,7 @@ namespace FIGlet
     using System.IO;
     using System.IO.Compression;
     using System.Linq;
+    using System.Reflection;
     using System.Text;
     using Utility;
 
@@ -20,6 +21,11 @@ namespace FIGlet
         /// The FLF signature
         /// </summary>
         public const string FlfSignature = "flf2";
+
+        /// <summary>
+        /// The font name. Is not always set.
+        /// </summary>
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets the hard blank character.
@@ -394,6 +400,15 @@ namespace FIGlet
             var signature = new string(signatureBuffer);
             var b = signature == FlfSignature;
             return b;
+        }
+
+        internal static bool CanHandleExtension(string fileName)
+        {
+            var extension = Path.GetExtension(fileName);
+            if (string.IsNullOrEmpty(extension))
+                return false;
+            return extension.Equals(".zip", StringComparison.InvariantCultureIgnoreCase)
+                   || extension.Equals(".flf", StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

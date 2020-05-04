@@ -30,7 +30,9 @@ namespace FIGlet
         /// <inheritdoc />
         public override FIGfont LoadFont()
         {
-            return FIGfont.FromEmbeddedResource(_resourceName, _siblingType);
+            var font = FIGfont.FromEmbeddedResource(_resourceName, _siblingType);
+            font.Name = base.Name;
+            return font;
         }
     }
 }

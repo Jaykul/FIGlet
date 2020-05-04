@@ -28,7 +28,9 @@ namespace FIGlet
         /// <returns></returns>
         public override FIGfont LoadFont()
         {
-            return FIGfont.FromFile(_path);
+            var font = FIGfont.FromFile(_path);
+            font.Name = base.Name;
+            return font;
         }
     }
 }
