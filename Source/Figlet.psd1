@@ -24,11 +24,11 @@
     VariablesToExport    = @()
     AliasesToExport      = @()
     FormatsToProcess     = @('Figlet.format.ps1xml')
-    NestedModules        = @()
+    NestedModules        = @('lib\Figlet.dll')
     RequiredModules      = @(@{ModuleName = "PANSIES"; ModuleVersion = "2.0.0" })
 
     # Script module or binary module file associated with this manifest.
-    RootModule           = 'Figlet.dll'
+    RootModule           = 'Figlet.psm1'
     GUID                 = '5689d5ac-ec72-455a-bce5-a82e32a9255a'
     Author               = "Joel 'Jaykul' Bennett"
     CompanyName          = 'PoshCode.org'
