@@ -1,6 +1,4 @@
-﻿using PoshCode.Pansies;
-using PoshCode.Pansies.ColorSpaces;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,21 +8,11 @@ using System.Text;
 
 namespace FIGlet.Commands
 {    
-    [Cmdlet(VerbsCommunications.Write, "Figlet")]
-    public class WriteFigletCommand : PSCmdlet
+    [Cmdlet(VerbsCommon.Get, "Figlet")]
+    public class GetFigletCommand : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string Message { get; set; }
-
-        [Parameter()]
-        public string ColorChars { get; set; }
-
-        [Parameter()]
-        [Alias("Color")]
-        public RgbColor[] Foreground { get; set; }
-
-        [Parameter()]
-        public RgbColor[] Background { get; set; }
 
         [Parameter()]
         [ArgumentCompleter(typeof(FontNameCompleter))]
@@ -32,10 +20,6 @@ namespace FIGlet.Commands
 
         [Parameter()]
         public LayoutRule LayoutRule { get; set; } = LayoutRule.Smushing;
-
-        [ValidateSet("HSL", "LCH", "RGB", "LAB", "XYZ")]
-        [Parameter()]
-        public string Colorspace { get; set; } = "LAB";
 
         protected override void EndProcessing()
         {
@@ -59,18 +43,11 @@ namespace FIGlet.Commands
                 driver.LayoutRule = LayoutRule;
                 driver.Write(Message);
 
-            var output = new PSObject(driver);
-            output.Properties.Add(new PSNoteProperty("Foreground", Foreground));
-            output.Properties.Add(new PSNoteProperty("Background", Background));
-            output.Properties.Add(new PSNoteProperty("Colorspace", Colorspace));
-            output.Properties.Add(new PSNoteProperty("ColorChars", ColorChars));
-            output.Properties.Add(new PSNoteProperty("Message", Message));
-
             WriteObject(driver);
-                base.EndProcessing();
+            base.EndProcessing();
         }
 
-        private class FontNameCompleter : IArgumentCompleter
+        public class FontNameCompleter : IArgumentCompleter
         {
             FIGfontReference[] Fonts;
 

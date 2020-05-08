@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
@@ -6,7 +6,7 @@
     <PackageId>FIGlet</PackageId>
     <Version>1.0.6</Version>
     <Company>PoshCode</Company>
-    <PackageLicenseUrl>https://github.com/Jaykul/FIGlet/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Jaykul/FIGlet</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/picrap/FIGlet/master/FIGlet/FIGlet.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/Jaykul/FIGlet.git</RepositoryUrl>
@@ -16,9 +16,10 @@
     <Product>FIGlet</Product>
     <Authors>Joel Bennett @jaykul, Pascal Craponne @picrap</Authors>
     <AssemblyName>FIGlet</AssemblyName>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageTags>figlet</PackageTags>
     <AssemblyOriginatorKeyFile>FIGlet.snk</AssemblyOriginatorKeyFile>
+    <PackageLicenseFile></PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">

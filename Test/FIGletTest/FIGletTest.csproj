@@ -13,15 +13,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\FIGlet\FIGlet.csproj" />
+    <ProjectReference Include="..\..\Source\Assembly\FIGlet.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="..\Fonts\small.flf" Link="Fonts\small.flf" />
+    <EmbeddedResource Include="..\..\Source\Assembly\Fonts\small.flf" Link="Fonts\small.flf" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="..\Fonts\small.zip" Link="Fonts\small.zip" />
+    <EmbeddedResource Include="..\..\Source\Assembly\Fonts\small.zip" Link="Fonts\small.zip" />
   </ItemGroup>
 
 </Project>

@@ -103,7 +103,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\FIGlet\FIGlet.csproj">
+    <ProjectReference Include="..\..\Source\Assembly\FIGlet.csproj">
       <Project>{DBEB2DC7-7D7D-41B5-AC52-D54932896A46}</Project>
       <Name>FIGlet</Name>
     </ProjectReference>
